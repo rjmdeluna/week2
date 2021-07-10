@@ -1,25 +1,34 @@
 const express = require('express');
 const router = express.Router();
-const Post = require('../models/Post');
+const Post = require('../models/Post.js');
+const mongoose = require('mongoose');
+const { restart } = require('nodemon');
+require('dotenv/config');
 
-router.get('/', (req, res) => {
-    res.send('List of Book Recommendations');
+const app = express();
+
+mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
+    if (err) console.log(err)
+    if (!err) console.log("Connected to DB");
 });
+router.get('/', async(req, res) => {
+    const x = await Post.find();
+    res.json(x);
+});
+app.use(express.json());
 
-router.post('/posts', (req, res) => {
+router.post('/', (req, res) => {
     const post = new Post({
-        Reader: req.body.Reader,
-        BookTitle: req.body.BookTitle,
-        BookDescription: req.body.BookDescription
-    })
-    post.save()
-    .then(data => {
+        last_name: req.body.last_name,
+        first_name: req.body.first_name,
+        phone_number: req.body.phone_number
+    });
+    post.save().then(data => {
         res.json(data);
     })
     .catch(err => {
         res.json({message: err})
-    });
+    })
 });
 
-module.exports = router;
-
+module.exports =router;

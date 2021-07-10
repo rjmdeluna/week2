@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 
 const PostSchema = mongoose.Schema({
-    Reader: {
+    last_name: {
         type: String,
         required: true
     },
-    BookTitle: {
+    first_name: {
         type: String,
         required: true
     },
-    BookDescription: {
+    phone_number: {
         type: String,
         required: true
     },
 });
 
-module.exports = mongoose.model('myFirstDatabase', PostSchema);
+module.exports = mongoose.model('FirstDB', PostSchema);
