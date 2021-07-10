@@ -15,8 +15,8 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 //ROUTES
-app.get('/get', (req, res) => {
-    res.send('Welcome Reader');
+app.get('/',(req, res) => {
+    res.send("Hello");
 });
 
 
