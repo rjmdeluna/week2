@@ -9,7 +9,7 @@ const PostSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    phone_number: {
+    phone_numbers: {
         type: String,
         required: true
     },

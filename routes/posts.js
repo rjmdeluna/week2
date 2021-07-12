@@ -11,12 +11,16 @@ mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true, useUnifiedTo
     if (err) console.log(err)
     if (!err) console.log("Connected to DB");
 });
+
+//GET
 router.get('/', async(req, res) => {
     const x = await Post.find();
     res.json(x);
 });
 app.use(express.json());
 
+
+//POST
 router.post('/', (req, res) => {
     const post = new Post({
         last_name: req.body.last_name,
