@@ -21,4 +21,7 @@ app.get('/',(req, res) => {
 
 
 //Listening to the Server
-app.listen(3000, () => console.log('Server running on port: http://localhost:3000'));
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => {
+    console.warn('Server running on http://localhost:${PORT}');
+});
