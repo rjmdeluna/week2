@@ -16,7 +16,7 @@ app.use(express.json());
 
 //ROUTES
 app.get('/',(req, res) => {
-    res.send("Hello");
+    res.send("Hello to you");
 });
 
 
