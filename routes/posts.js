@@ -1,16 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post.js');
-const mongoose = require('mongoose');
-const { restart } = require('nodemon');
-require('dotenv/config');
-
 const app = express();
-
-mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
-    if (err) console.log(err)
-    if (!err) console.log("Connected to DB");
-});
 
 //GET
 router.get('/', async(req, res) => {
@@ -19,13 +10,12 @@ router.get('/', async(req, res) => {
 });
 app.use(express.json());
 
-
 //POST
-router.post('/', (req, res) => {
+router.post('/create', (req, res) => {
     const post = new Post({
         last_name: req.body.last_name,
         first_name: req.body.first_name,
-        phone_number: req.body.phone_number
+        phone_numbers: req.body.phone_numbers
     });
     post.save().then(data => {
         res.json(data);
@@ -33,6 +23,24 @@ router.post('/', (req, res) => {
     .catch(err => {
         res.json({message: err})
     })
+});
+
+//Get  specific Contacts
+router.get('/get/:id', async (req,res) =>{
+    const q = await Post.findById({_id: req.params.id});
+    res.json(q);
+});
+
+//Delete Contacts 
+router.delete('/delete/:id', async (req,res) => {
+    const result = await Post.findByIdAndDelete({_id: req.params.id});
+    res.json(result);
+});
+
+//Update a Contacts
+router.patch('/update/:id', async (req, res) => {
+    const patch = await Post.updateOne({_id: req.params.id}, {$set: req.body});
+    res.json(patch);
 });
 
 module.exports =router;

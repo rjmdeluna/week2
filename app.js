@@ -2,8 +2,17 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
-require('dotenv/config');
+require('dotenv').config();
 
+const port = process.env.PORT;
+
+//Starting server
+const morgan = require('morgan'); 
+app.use(morgan('tiny'));
+
+app.listen(port, () => {
+    console.log("Server started on PORT : ", port);
+});
 
 //Import Routes
 const postsRoute = require('./routes/posts.js');
@@ -19,9 +28,7 @@ app.get('/',(req, res) => {
     res.send("Hello to you");
 });
 
+//require
+require('./initializeDB')();
 
 //Listening to the Server
-const PORT = process.env.PORT || 3000
-app.listen(PORT, () => {
-    console.warn('Server running on http://localhost:${PORT}');
-});

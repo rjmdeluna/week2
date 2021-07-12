@@ -10,9 +10,9 @@ const PostSchema = mongoose.Schema({
         required: true
     },
     phone_numbers: {
-        type: String,
+        type: [String],
         required: true
     },
 });
 
-module.exports = mongoose.model('FirstDB', PostSchema);
+module.exports = mongoose.model('contacts', PostSchema);
